@@ -11,6 +11,18 @@ const historyList = [
     },
 ];
 
+const projects = [
+    {
+        name: "Project",
+        value: 13,
+    },
+    {
+        name: "Project2",
+        value: 50,
+    },
+];
+
 new RexProgress(document.getElementById("app")!, {
     history: historyList,
+    projects,
 });

@@ -28,7 +28,7 @@ class RexProgressRect {
 
     public getWidth() {
         const instance = this.getProgress();
-        return instance?.el.offsetWidth! - 48 ?? 0;
+        return instance?.el.offsetWidth! - 48 || 0;
     }
 
     public getCanvasElement() {

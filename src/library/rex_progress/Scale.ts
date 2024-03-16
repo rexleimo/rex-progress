@@ -34,7 +34,7 @@ class Scale {
         }
         group.addChildren(children);
         group.position.y = 75;
-        group.opacity = 1;
+        group.opacity = 0;
 
         this.el = group;
     }

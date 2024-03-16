@@ -5,10 +5,12 @@ import Control from "./Control";
 import { fillColor, primaryColor2Rgb, primaryColorRgb } from "./conts";
 import Scale from "./Scale";
 import HistoryLabel from "./HistoryLabel";
+import ProjectLabel from "./ProjectLabel";
 
 class Progress {
     bar!: paper.Path.Rectangle;
     textGroup!: paper.Group;
+    projectCollect: ProjectLabel[] = [];
 
     constructor() {
         this.draw();
@@ -48,13 +50,30 @@ class Progress {
         control.hoverListen.add(() => {
             this.textGroup.opacity = 1;
             scale.show();
+            this.projectCollect.forEach((item) => item.hide());
         });
         control.leaveListen.add((isDrag) => {
             if (!isDrag) {
                 this.textGroup.opacity = 0;
                 scale.hide();
+                this.projectCollect.forEach((item) => item.show());
             }
         });
+        this.drawProjectLabel();
+    }
+
+    drawProjectLabel() {
+        const width = RexProgressRect.getInstance().getWidth();
+        const options = RexProgressRect.getInstance().getOptions();
+        const projects = options?.projects || [];
+        for (const item of projects) {
+            const left = (width * (item.value / 100) + 24).toFixed(2);
+            const project = new ProjectLabel({
+                point: new Point(Number(left), 0),
+                content: `${item.value} ${item.name}`,
+            });
+            this.projectCollect.push(project);
+        }
     }
 
     draw() {
@@ -113,7 +132,7 @@ class Progress {
         triangle.position.x = 27;
         group.addChildren([triangle, rect, txt, rectMask]);
         group.position.x = 24 + 6;
-        group.opacity = 1;
+        group.opacity = 0;
         this.textGroup = group;
     }
 

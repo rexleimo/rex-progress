@@ -3,6 +3,10 @@ export interface RexProgressProps {
         date: string;
         value: number;
     }[];
+    projects?: {
+        name: string;
+        value: number;
+    }[];
 }
 
 export interface RexProgress {
