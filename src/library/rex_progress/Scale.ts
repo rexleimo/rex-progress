@@ -2,6 +2,7 @@ import Paper from "paper";
 import RexProgressRect from "./RexProgressRect";
 import { fillColor } from "./conts";
 class Scale {
+    el!: paper.Group;
     constructor() {
         const width = RexProgressRect.getInstance().getWidth();
         const group = new Paper.Group();
@@ -33,6 +34,17 @@ class Scale {
         }
         group.addChildren(children);
         group.position.y = 75;
+        group.opacity = 1;
+
+        this.el = group;
+    }
+
+    hide() {
+        this.el.opacity = 0;
+    }
+
+    show() {
+        this.el.opacity = 1;
     }
 }
 

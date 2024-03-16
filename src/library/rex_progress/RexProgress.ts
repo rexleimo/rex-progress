@@ -30,7 +30,9 @@ class RexProgress implements IRexProgress {
             canvas.width = this.el.offsetWidth;
             canvas.height = this.el.offsetHeight;
             Paper.setup(canvas);
-            RexProgressRect.getInstance().setRexProgress(this);
+            RexProgressRect.getInstance()
+                .setRexProgress(this)
+                .setOptions(this.options);
             new Progress();
         }, 1);
     }

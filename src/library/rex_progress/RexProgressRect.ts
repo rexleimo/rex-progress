@@ -1,12 +1,14 @@
 import {
     PartialCSSStyleDeclaration,
     RexProgress,
+    RexProgressProps,
 } from "./types/RexProgressProps";
 
 class RexProgressRect {
     public static instance: RexProgressRect;
 
     private progress?: RexProgress;
+    private options?: RexProgressProps;
 
     public static getInstance(): RexProgressRect {
         if (!RexProgressRect.instance) {
@@ -15,8 +17,9 @@ class RexProgressRect {
         return RexProgressRect.instance;
     }
 
-    public setRexProgress(progress: RexProgress): void {
+    public setRexProgress(progress: RexProgress) {
         this.progress = progress;
+        return this;
     }
 
     public getProgress() {
@@ -39,6 +42,14 @@ class RexProgressRect {
                 canvas.style[style] = styles[style]!;
             });
         }
+    }
+
+    public setOptions(options?: RexProgressProps) {
+        this.options = options;
+    }
+
+    public getOptions() {
+        return this.options;
     }
 }
 

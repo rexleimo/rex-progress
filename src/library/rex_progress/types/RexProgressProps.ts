@@ -1,4 +1,9 @@
-export interface RexProgressProps {}
+export interface RexProgressProps {
+    history?: {
+        date: string;
+        value: number;
+    }[];
+}
 
 export interface RexProgress {
     el: HTMLElement;

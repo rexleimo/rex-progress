@@ -4,6 +4,7 @@ import { Color, Path, Point } from "paper/dist/paper-core";
 import Control from "./Control";
 import { fillColor, primaryColor2Rgb, primaryColorRgb } from "./conts";
 import Scale from "./Scale";
+import HistoryLabel from "./HistoryLabel";
 
 class Progress {
     bar!: paper.Path.Rectangle;
@@ -11,8 +12,10 @@ class Progress {
 
     constructor() {
         this.draw();
+        this.drawHistory();
         this.drawCurrent();
         const control = new Control();
+        const scale = new Scale();
         control.listen.add((newX) => {
             const width = RexProgressRect.getInstance().getWidth();
             const targetX = newX + 8 - 24;
@@ -29,6 +32,8 @@ class Progress {
                 txt.position.x = this.textGroup.position.x - 1;
                 this.textGroup.children[0].position.x =
                     this.textGroup.position.x;
+                this.textGroup.children[3].position.x =
+                    this.textGroup.position.x;
             } else {
                 this.textGroup.children[1].bounds.size.width = 54;
                 this.textGroup.children[1].position.x =
@@ -36,17 +41,20 @@ class Progress {
                 txt.position.x = this.textGroup.position.x;
                 this.textGroup.children[0].position.x =
                     this.textGroup.position.x;
+                this.textGroup.children[3].position.x =
+                    this.textGroup.position.x;
             }
         });
         control.hoverListen.add(() => {
             this.textGroup.opacity = 1;
+            scale.show();
         });
         control.leaveListen.add((isDrag) => {
             if (!isDrag) {
                 this.textGroup.opacity = 0;
+                scale.hide();
             }
         });
-        new Scale();
     }
 
     draw() {
@@ -75,6 +83,15 @@ class Progress {
             size: [54, 20],
             radius: 4,
             fillColor: primaryColor2Rgb,
+            strokeWidth: 1,
+            strokeColor: primaryColorRgb,
+        });
+
+        const rectMask = new Paper.Path.Rectangle({
+            point: [54 / 2 - 4, 17],
+            size: [8, 5],
+            fillColor: primaryColor2Rgb,
+            radius: 6,
         });
 
         const txt = new Paper.PointText({
@@ -90,12 +107,28 @@ class Progress {
             8
         );
         triangle.fillColor = primaryColor2Rgb;
+        triangle.strokeWidth = 1;
+        triangle.strokeColor = primaryColorRgb;
         triangle.rotate(180);
         triangle.position.x = 27;
-        group.addChildren([triangle, rect, txt]);
+        group.addChildren([triangle, rect, txt, rectMask]);
         group.position.x = 24 + 6;
-        group.opacity = 0;
+        group.opacity = 1;
         this.textGroup = group;
+    }
+
+    drawHistory() {
+        const options = RexProgressRect.getInstance().getOptions();
+        const width = RexProgressRect.getInstance().getWidth();
+        const historyList = options?.history || [];
+
+        for (const history of historyList) {
+            const left = (width * (history.value / 100) + 24).toFixed(2);
+            new HistoryLabel({
+                point: new Point(Number(left), 30),
+                content: `${history.date} ${history.value}%`,
+            });
+        }
     }
 }
 
