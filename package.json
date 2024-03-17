@@ -1,8 +1,13 @@
 {
-  "name": "vite-project",
+  "name": "rex-progress",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "main": "./dist/rex-progress.es.js",
+  "module": "./dist/rex-progress.umd.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -15,6 +20,7 @@
   "dependencies": {
     "less": "^4.2.0",
     "paper": "^0.12.17",
-    "ramda": "^0.29.1"
+    "ramda": "^0.29.1",
+    "rollup-plugin-terser": "^7.0.2"
   }
 }

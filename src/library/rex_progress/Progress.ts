@@ -1,6 +1,6 @@
 import Paper from "paper";
 import RexProgressRect from "./RexProgressRect";
-import { Color, Path, Point } from "paper/dist/paper-core";
+import { Color, Point } from "paper/dist/paper-core";
 import Control from "./Control";
 import { fillColor, primaryColor2Rgb, primaryColorRgb } from "./conts";
 import Scale from "./Scale";
