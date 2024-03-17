@@ -1,7 +1,7 @@
 {
   "name": "rex-progress",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "main": "./dist/rex-progress.es.js",
   "module": "./dist/rex-progress.umd.js",
